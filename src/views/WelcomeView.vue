@@ -3,12 +3,12 @@
     <p>Welcome</p>
     <div v-if="showLogin">
       <h2>Login</h2>
-      <LoginForm/>
+      <LoginForm @login="enterChat"/>
       <p>No account yet? <span @click="showLogin=false">Signup</span> instead</p>
     </div>
     <div v-else>
       <h2>Sign up</h2>
-      <SignupForm/>
+      <SignupForm @signup="enterChat"/>
       <p>Already registered? <span @click="showLogin=true">Login</span> instead</p>
     </div>
   </div>
@@ -18,52 +18,59 @@
 import SignupForm from "@/components/SignupForm";
 import LoginForm from "@/components/LoginForm";
 import {ref} from "vue";
+import {useRouter} from "vue-router";
 
 export default {
   name: "WelcomeView",
   components: {LoginForm, SignupForm},
-  setup(){
-    const showLogin =ref(true)
+  setup() {
+    const showLogin = ref(true)
+    const router = useRouter()
 
-    return {showLogin}
+    const enterChat = () => {
+      router.push({name: 'ChatroomView'})
+    }
+
+    return {showLogin, enterChat}
 
   }
 }
 </script>
 
 <style>
-  .welcome{
-    text-align: center;
-    padding: 20px 0;
-  }
-  /* form styles */
-  .welcome form {
-    width: 300px;
-    margin: 20px auto;
-  }
+.welcome {
+  text-align: center;
+  padding: 20px 0;
+}
 
-  .welcome label {
-    display: block;
-    margin: 20px 0 10px;
-  }
+/* form styles */
+.welcome form {
+  width: 300px;
+  margin: 20px auto;
+}
 
-  .welcome input {
-    width: 100%;
-    padding: 10px;
-    border-radius: 20px;
-    border: 1px solid #eee;
-    outline: none;
-    color: #999;
-    margin: 10px auto;
-  }
+.welcome label {
+  display: block;
+  margin: 20px 0 10px;
+}
 
-  .welcome span {
-    font-weight: bold;
-    text-decoration: underline;
-    cursor: pointer;
-  }
+.welcome input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid #eee;
+  outline: none;
+  color: #999;
+  margin: 10px auto;
+}
 
-  .welcome button {
-    margin: 20px auto;
-  }
+.welcome span {
+  font-weight: bold;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.welcome button {
+  margin: 20px auto;
+}
 </style>
